@@ -1,0 +1,46 @@
+{
+  "generated_date": "2026-08-23 15:42:44",
+  "total_models": 48,
+  "primary_rank": "statistical_rank / selection_rank",
+  "selection_uses_test_metrics": false,
+  "selection_weights": {
+    "cv_r2_mean": 0.25,
+    "cv_r2_std": 0.05,
+    "abs_train_cv_gap": 0.15
+  },
+  "predefined_weight_scenarios": {
+    "equal": {
+      "rank_cv_r2": 0.3333333333333333,
+      "rank_cv_stability": 0.3333333333333333,
+      "rank_train_cv_gap": 0.3333333333333333
+    },
+    "performance_focused": {
+      "rank_cv_r2": 0.7,
+      "rank_cv_stability": 0.15,
+      "rank_train_cv_gap": 0.15
+    },
+    "stability_focused": {
+      "rank_cv_r2": 0.4,
+      "rank_cv_stability": 0.3,
+      "rank_train_cv_gap": 0.3
+    }
+  },
+  "monte_carlo_weight_simulations": 1000,
+  "monte_carlo_constraints": {
+    "minimum_combined_cv_and_validation_weight": 0.5,
+    "maximum_single_criterion_weight": 0.5
+  },
+  "sensitivity_outputs": {
+    "scenarios": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightScenarios.csv",
+    "scenario_results": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightSensitivityAnalysis.csv",
+    "monte_carlo_weights": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\MonteCarloWeightSensitivity.csv",
+    "monte_carlo_rank_matrix": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\MonteCarloRankMatrix.csv",
+    "summary": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightSensitivitySummary.txt",
+    "first_place_plot": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\MonteCarloFirstPlaceRate.png",
+    "rank_distribution_plot": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightSensitivityRankDistribution.png"
+  },
+  "test_rank_purpose": "Descriptive final holdout reporting only",
+  "generalization_rank_purpose": "Supplementary assessment based on train-CV gap, CV variability, and CV-validation split sensitivity",
+  "principal_overfitting_indicator": "r2_train - cv_r2_mean",
+  "output_alias": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\EnhancedFinalRanking.csv"
+}

@@ -1,0 +1,440 @@
+{
+  "cwd": "G:\\Researching\\Geo_MLops_2026",
+  "input_csv": "G:\\Researching\\Geo_MLops_2026\\data\\raw\\samples.csv",
+  "outdir": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report",
+  "analysis_columns": [
+    "AC",
+    "Distance",
+    "Depth",
+    "Ucs_class",
+    "PI/FF",
+    "PI",
+    "FF",
+    "LL",
+    "PL"
+  ],
+  "normality_columns": [
+    "AC",
+    "Distance",
+    "Depth",
+    "Ucs_class",
+    "PI/FF",
+    "PI",
+    "FF",
+    "LL",
+    "PL"
+  ],
+  "column_configuration": {
+    "source": "params_feature_sets",
+    "params_file": "G:\\Researching\\Geo_MLops_2026\\params.yaml",
+    "available_targets": [
+      "AC"
+    ],
+    "configured_target": "AC",
+    "resolved_target": "AC",
+    "feature_sets": {
+      "fs1": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "PI/FF"
+      ],
+      "fs2": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "PI",
+        "FF"
+      ],
+      "fs3": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "LL",
+        "PL",
+        "FF"
+      ],
+      "fs4": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "PI"
+      ]
+    },
+    "resolved_feature_sets": {
+      "fs1": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "PI/FF"
+      ],
+      "fs2": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "PI",
+        "FF"
+      ],
+      "fs3": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "LL",
+        "PL",
+        "FF"
+      ],
+      "fs4": [
+        "Distance",
+        "Depth",
+        "Ucs_class",
+        "PI"
+      ]
+    },
+    "feature_columns_union": [
+      "Distance",
+      "Depth",
+      "Ucs_class",
+      "PI/FF",
+      "PI",
+      "FF",
+      "LL",
+      "PL"
+    ],
+    "configured_columns": [
+      "AC",
+      "Distance",
+      "Depth",
+      "Ucs_class",
+      "PI/FF",
+      "PI",
+      "FF",
+      "LL",
+      "PL"
+    ],
+    "resolved_columns": [
+      "AC",
+      "Distance",
+      "Depth",
+      "Ucs_class",
+      "PI/FF",
+      "PI",
+      "FF",
+      "LL",
+      "PL"
+    ],
+    "missing_configured_columns": [],
+    "missing_by_feature_set": {},
+    "yaml_to_csv": {
+      "AC": "AC",
+      "Distance": "Distance",
+      "Depth": "Depth",
+      "Ucs_class": "Ucs_class",
+      "PI/FF": "PI/FF",
+      "PI": "PI",
+      "FF": "FF",
+      "LL": "LL",
+      "PL": "PL"
+    },
+    "classification_target_mode": "auto"
+  },
+  "quality": {
+    "total_rows": 332,
+    "columns_checked": [
+      "AC",
+      "Distance",
+      "Depth",
+      "Ucs_class",
+      "PI/FF",
+      "PI",
+      "FF",
+      "LL",
+      "PL"
+    ],
+    "missing_rate": {
+      "AC": 0.0,
+      "Distance": 0.0,
+      "Depth": 0.0,
+      "Ucs_class": 0.0,
+      "PI/FF": 0.0,
+      "PI": 0.0,
+      "FF": 0.0,
+      "LL": 0.0,
+      "PL": 0.0
+    },
+    "duplicate_rows": 0,
+    "risk_level": "PASS",
+    "constraints": [
+      {
+        "name": "AC_nonnegative",
+        "condition": "AC must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "Distance_nonnegative",
+        "condition": "Distance must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "Depth_nonnegative",
+        "condition": "Depth must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "Ucs_class_nonnegative",
+        "condition": "Ucs_class must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "PI/FF_nonnegative",
+        "condition": "PI/FF must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "PI_nonnegative",
+        "condition": "PI must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "FF_nonnegative",
+        "condition": "FF must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "LL_nonnegative",
+        "condition": "LL must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      },
+      {
+        "name": "PL_nonnegative",
+        "condition": "PL must be >= 0",
+        "passed": true,
+        "n_violations": 0,
+        "examples": []
+      }
+    ]
+  },
+  "artifacts": {
+    "stats_csv": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\table2_stats.csv",
+    "correlation": {
+      "pearson_csv": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\corr_pearson.csv",
+      "spearman_csv": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\corr_spearman.csv",
+      "heatmap_pearson": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\heatmap_corr_pearson.png",
+      "heatmap_spearman": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\heatmap_corr_spearman.png",
+      "top_corr_with_target_csv": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\top_corr_with_target.csv",
+      "top_corr_with_target": {
+        "PI/FF": 0.6120807547361681,
+        "FF": -0.5489036906767463,
+        "PI": 0.3796273225370028,
+        "LL": 0.26219482379815695,
+        "Distance": -0.2341991116091611,
+        "Depth": -0.2214316452892508,
+        "Ucs_class": 0.21043839588470387,
+        "PL": -0.054649832316643956
+      }
+    },
+    "normality_summary_csv": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality_summary.csv",
+    "normality": {
+      "AC": {
+        "column": "AC",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\AC_normality.png",
+        "mean": 0.9087497765512047,
+        "std": 0.41661328155041794,
+        "skewness": 1.4364031169321445,
+        "excess_kurtosis": 1.3935230897944777,
+        "shapiro_w": 0.8239900619865749,
+        "shapiro_p": 9.666481901018058e-19,
+        "dagostino_k2": 81.24268601038072,
+        "dagostino_p": 2.282311325427795e-18,
+        "anderson_statistic": 19.611556845676546,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "Distance": {
+        "column": "Distance",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\Distance_normality.png",
+        "mean": 5483.532059897289,
+        "std": 4374.078142453059,
+        "skewness": 0.979901948713515,
+        "excess_kurtosis": 0.10174266997717041,
+        "shapiro_w": 0.873709317543477,
+        "shapiro_p": 7.428966183986048e-16,
+        "dagostino_k2": 40.335503947898324,
+        "dagostino_p": 1.7428363338132087e-09,
+        "anderson_statistic": 12.119252088049734,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "Depth": {
+        "column": "Depth",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\Depth_normality.png",
+        "mean": 8.691705095542169,
+        "std": 8.677281532906697,
+        "skewness": 1.3267138465411157,
+        "excess_kurtosis": 0.8879534542382639,
+        "shapiro_w": 0.8155497748126157,
+        "shapiro_p": 3.6052506669891436e-19,
+        "dagostino_k2": 68.83205944570817,
+        "dagostino_p": 1.130597972607125e-15,
+        "anderson_statistic": 22.50895981409724,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "Ucs_class": {
+        "column": "Ucs_class",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\Ucs_class_normality.png",
+        "mean": 0.4126506024096386,
+        "std": 0.4930540727345424,
+        "skewness": 0.3564671411855524,
+        "excess_kurtosis": -1.8843191037879656,
+        "shapiro_w": 0.6253040318007275,
+        "shapiro_p": 2.7269336406157253e-26,
+        "dagostino_k2": 1667.2540368632065,
+        "dagostino_p": 0.0,
+        "anderson_statistic": 61.91334180023284,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "PI/FF": {
+        "column": "PI/FF",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\PI_FF_normality.png",
+        "mean": 0.3078308491506024,
+        "std": 0.10239505399524998,
+        "skewness": 1.5547444902312304,
+        "excess_kurtosis": 3.0274726572616153,
+        "shapiro_w": 0.8702485498852827,
+        "shapiro_p": 4.423274012831425e-16,
+        "dagostino_k2": 105.03242912189465,
+        "dagostino_p": 1.5577501643014024e-23,
+        "anderson_statistic": 12.936078193451976,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "PI": {
+        "column": "PI",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\PI_normality.png",
+        "mean": 25.346385542168676,
+        "std": 6.722637426316534,
+        "skewness": 1.4495337837925124,
+        "excess_kurtosis": 5.059329483617695,
+        "shapiro_w": 0.9173441867319082,
+        "shapiro_p": 1.494440659061576e-12,
+        "dagostino_k2": 114.17239600124182,
+        "dagostino_p": 1.613538065689805e-25,
+        "anderson_statistic": 4.82389095512309,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "FF": {
+        "column": "FF",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\FF_normality.png",
+        "mean": 84.57228915662651,
+        "std": 12.101192802839035,
+        "skewness": -1.3110223921022859,
+        "excess_kurtosis": 0.754705647700038,
+        "shapiro_w": 0.8237442029521305,
+        "shapiro_p": 9.388133137460504e-19,
+        "dagostino_k2": 66.46783712638921,
+        "dagostino_p": 3.687164858540623e-15,
+        "anderson_statistic": 20.869105749679306,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "LL": {
+        "column": "LL",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\LL_normality.png",
+        "mean": 48.69277108433735,
+        "std": 8.910542764518636,
+        "skewness": 0.9184062521146483,
+        "excess_kurtosis": 2.364226922046803,
+        "shapiro_w": 0.9520778643212904,
+        "shapiro_p": 6.2604688828929405e-09,
+        "dagostino_k2": 58.259091027700904,
+        "dagostino_p": 2.2345965451793183e-13,
+        "anderson_statistic": 3.7214293284459927,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      },
+      "PL": {
+        "column": "PL",
+        "n": 332,
+        "plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\normality\\PL_normality.png",
+        "mean": 23.346385542168676,
+        "std": 3.948752398732705,
+        "skewness": -0.023994081189305634,
+        "excess_kurtosis": 0.8529652589552561,
+        "shapiro_w": 0.9825769717530711,
+        "shapiro_p": 0.00047329680918984377,
+        "dagostino_k2": 6.26719298442584,
+        "dagostino_p": 0.04356084893623844,
+        "anderson_statistic": 2.0347684796721524,
+        "anderson_critical_5pct": 0.778,
+        "anderson_decision_5pct": "Non-normal",
+        "decision_alpha": 0.05,
+        "normality_decision": "Non-normal",
+        "note": null,
+        "dagostino_note": null
+      }
+    },
+    "all_normality_plot": "G:\\Researching\\Geo_MLops_2026\\data_processing_report\\dq_report\\all normality.png"
+  },
+  "target_requested": null,
+  "target": "AC",
+  "normality_alpha": 0.05,
+  "errors": []
+}

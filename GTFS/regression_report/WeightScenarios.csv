@@ -1,0 +1,4 @@
+scenario,rank_cv_r2,rank_cv_stability,rank_train_cv_gap,total_weight
+equal,0.3333333333333333,0.3333333333333333,0.3333333333333333,1.0
+performance_focused,0.7,0.15,0.15,1.0
+stability_focused,0.4,0.3,0.3,1.0

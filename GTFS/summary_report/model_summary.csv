@@ -1,0 +1,9 @@
+﻿task,target,feature_set,model,selection_metric,cv_score,cv_sd,test_score,generalization_gap,source_file
+regression,AC,fs1,SVR,R2,0.2601581937583264,0.2592532079813409,0.3579777903550181,0.1501439671327215,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\regression_report\all_evaluations.csv
+regression,AC,fs2,SVR,R2,0.2789994379707864,0.2416810501780325,0.340591303591592,0.1577258750465674,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\regression_report\all_evaluations.csv
+regression,AC,fs3,SVR,R2,0.2835503075477345,0.2553727040984295,0.3184473899931648,0.1730307934379456,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\regression_report\all_evaluations.csv
+regression,AC,fs4,SVR,R2,0.0959826395092362,0.1664084036739288,0.1858566490005502,0.1225468633264936,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\regression_report\all_evaluations.csv
+classification,AC,fs1,XGB,Macro-F1,0.649244,0.104533,0.78394,0.068157,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\classification_report\all_evaluations_class.csv
+classification,AC,fs2,SVC,Macro-F1,0.618984,0.149788,0.674835,0.039656,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\classification_report\all_evaluations_class.csv
+classification,AC,fs3,SVC,Macro-F1,0.57509,0.156192,0.643782,0.10113,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\classification_report\all_evaluations_class.csv
+classification,AC,fs4,ANN,Macro-F1,0.499649,0.10344,0.562963,0.06333,G:\Researching\GT_GL_MLops\GTFS_MLops_2026\classification_report\all_evaluations_class.csv
