@@ -1,12 +1,31 @@
-# Flexible GeoSoilML MLOps
+# GeoSoilML
 
-A configurable machine-learning research workflow for tabular, geotechnical, geological, spatial, and other engineering datasets. The repository is designed so new studies can change targets, feature sets, grouping strategy, class thresholds, model sets, input data, and output directories mainly through YAML profiles instead of editing Python source code.
+> A reproducible and configurable MLOps framework for geotechnical and engineering-geology machine learning.
 
-The main GUI is `soil_mlops_gui.py`. The canonical active configuration is always `params.yaml`.
+GeoSoilML provides configurable machine-learning workflows for tabular, geotechnical, geological, spatial, and related engineering datasets. Experimental targets, feature sets, grouping strategies, classification settings, model families, input datasets, and output directories are controlled primarily through YAML profiles, reducing the need to modify Python source code between studies.
 
-## 1. Python installation
+The main graphical interface is `soil_mlops_gui.py`, and the canonical active configuration file is `params.yaml`.
 
-Python 3.10+ is recommended. Create a virtual environment and install the repository dependencies from `requirements.txt`.
+## Key features
+
+- YAML-driven experiment configuration
+- Configurable regression and classification workflows
+- Multiple targets and arbitrary named feature sets
+- Optional location/group-aware validation
+- Optional spatial metadata
+- Editable model-specific hyperparameter search spaces and reusable presets
+- Nested cross-validation and independent holdout evaluation
+- Learning-curve and permutation-sensitivity diagnostics
+- Automated model evaluation and ranking
+- Interactive single-sample regression and classification prediction
+- Automated PDF, Markdown, JSON, and CSV research summaries
+- GUI and command-line workflows
+- Reproducibility metadata and experiment profiles
+
+
+## Python installation
+
+Python 3.10 or newer is recommended. Create a virtual environment and install the repository dependencies from `requirements.txt`.
 
 ### Windows PowerShell
 
@@ -37,7 +56,7 @@ pip install -r requirements.txt
 
 `tkinter` is part of the standard Python installation on Windows. On some Linux distributions it is supplied by the operating system rather than `pip` (for example, a package commonly named `python3-tk`).
 
-## 2. Start the GUI
+## Start the GUI
 
 ```bash
 python soil_mlops_gui.py --params params.yaml
@@ -45,7 +64,7 @@ python soil_mlops_gui.py --params params.yaml
 
 If `--params` is omitted, `params.yaml` remains the default active profile.
 
-## 3. Multiple YAML experiment profiles
+## Multiple YAML experiment profiles
 
 You can keep any number of experiment/model configurations, for example:
 
@@ -68,7 +87,7 @@ A YAML file selected from outside the repository can also be imported into `conf
 
 For a new study, start from `params_template.yaml`, save it under a descriptive name, and activate it from the GUI.
 
-## 4. Targets and feature sets
+## Targets and feature sets
 
 `TARGETS` can contain one or many output variables. Each output may have any number of named feature sets; names such as `fs1`, `baseline`, `spatial`, `geology`, or `all_features` are all valid.
 
@@ -85,7 +104,7 @@ TARGETS:
 
 The repository therefore does not require the target to be `AC` and does not require a fixed number of feature sets.
 
-## 5. Optional location/group-aware validation
+## Optional location/group-aware validation
 
 A location/group column is optional. Merely having a column such as `Location_No` in the CSV does not automatically enable grouped validation.
 
@@ -107,7 +126,7 @@ split:
 
 The grouping column can be any suitable identifier, such as `Location_No`, `Site_ID`, `BH`, `Station`, `Patient_ID`, or `Batch_ID`.
 
-## 6. Optional spatial metadata
+## Optional spatial metadata
 
 Spatial information is independent of grouping. A study may have coordinates without using group-aware splitting, use grouped validation without coordinates, use both, or use neither.
 
@@ -127,7 +146,7 @@ data:
     enabled: false
 ```
 
-## 7. Regression and classification
+## Regression and classification
 
 Regression and classification can be enabled independently through the active YAML profile.
 
@@ -168,7 +187,7 @@ A minimal experiment profile may therefore omit large `param_grids` sections whi
 
 The full supplied reference configuration is also retained as `configs/params_AC_reference.yaml`.
 
-## 8. Selectable project directories
+## Selectable project directories
 
 The GUI allows the principal output locations to be changed. Default paths are:
 
@@ -201,12 +220,14 @@ The raw input dataset is configured separately:
 data:
   input_csv: data/raw/samples.csv
 ```
-
 Project-local paths are stored relatively when possible, making configurations more portable across computers and GitHub clones.
 
-## 9. `install.txt` stays synchronized
+### Data availability
 
-After paths are confirmed in the GUI, `install.txt` is regenerated. It keeps explicit command-line arguments for the individual programs while matching the currently active directories and `params.yaml`.
+The original research dataset is not distributed with this repository due to data-sharing and privacy restrictions. Users can provide their own dataset and configure its location, targets, and predictors through the active YAML profile. A synthetic or sanitized example dataset may be included solely to demonstrate the expected input structure and should not be interpreted as the original research dataset.
+## Command reference (`install.txt`)
+
+After paths are confirmed in the GUI, `install.txt` is regenerated to provide explicit command-line examples for the individual programs using the currently active directories and `params.yaml`.
 
 Examples include:
 
@@ -216,9 +237,9 @@ python src/train.py --data data/processed --models_dir regression_models --repor
 python src/trainclass.py --data data/processed --models_dir classification_models --reports_dir classification_report --params params.yaml
 ```
 
-This is useful both as an installation/reference file and as a reproducible record of the commands corresponding to the active configuration.
+This file serves as both an installation reference and a reproducible command record for the active configuration.
 
-## 10. Run the configurable pipeline
+## Run the configurable pipeline
 
 Run the enabled main stages using the active profile:
 
@@ -240,7 +261,7 @@ python run_pipeline.py --params params.yaml --data path/to/new_data.csv
 
 Pipeline stages can be enabled or disabled under the `pipeline` section of the YAML profile.
 
-## 11. Repository dependency file
+## Repository dependency file
 
 `requirements.txt` includes dependencies used across the repository, not only the main regression script. This includes the numerical/scientific stack, XGBoost, MLflow, statistics, Excel support, and optional spatial/geological utilities imported by repository modules.
 
@@ -252,7 +273,7 @@ Major dependency groups are:
 - GeoPandas, pyproj, and rasterio
 - openpyxl, chardet, and tqdm
 
-## 12. Recommended workflow for a new research project
+## Recommended workflow for a new research project
 
 1. Copy `params_template.yaml` to a new descriptive profile in `configs/`.
 2. Set `data.input_csv`.
@@ -267,11 +288,17 @@ Major dependency groups are:
 11. Check the regenerated `install.txt`.
 12. Run individual stages from the GUI or execute `run_pipeline.py`.
 
-## 13. GitHub notes
+## Repository and archival guidance
 
-Generated models, reports, processed data, caches, virtual environments, MLflow artifacts, and raw CSV datasets are ignored by the included `.gitignore`. Commit sanitized YAML profiles and, if useful, a small non-sensitive example dataset rather than private research data.
+Generated reports, processed data, caches, virtual environments, MLflow artifacts, private/raw research datasets, and non-selected model artifacts should remain excluded through `.gitignore`. Commit the source code, dependency specification, sanitized YAML profiles, and—when permitted—a small non-sensitive example dataset. A deliberately selected public model artifact may be retained in `models/` when appropriate. For a Zenodo release, archive a tagged GitHub release and include the exact configuration files needed to reproduce the reported experiments.
 
-Files such as `features_old.py`, `train_ok.py`, and other historically named variants are retained for backward/reference purposes. The configurable workflow should use the current main programs (`features.py`, `train.py`, `trainclass.py`, evaluation/prediction modules, `run_pipeline.py`, and `soil_mlops_gui.py`).
+
+
+## Pretrained/public model artifacts
+
+GeoSoilML may include a deliberately selected trained `.pkl` model in `models/` for demonstration or reproducibility purposes. Other generated model artifacts can remain excluded from version control by default.
+
+Before publishing a serialized model, verify that the artifact does not contain raw training rows, sample identifiers, coordinates, private metadata, or other information that should not be distributed. The presence of a public model artifact does not imply that the original training dataset is distributed with this repository.
 
 ## Automated research summary report
 
@@ -420,15 +447,10 @@ For a continuous target such as `AC`, the same target can be used by both groups
 
 Regression artifacts are written only to `models_regression` / `reports_regression`, and classification artifacts only to `models_classification` / `reports_classification`. Unselected task folders are not created merely for symmetry.
 
-### Important regression fix
-
-A previous generic-target revision accidentally placed the regression training loop after a helper-function `return`, making it unreachable even though the file compiled. This has been corrected. When `pipeline.regression: true` (or Regression is checked in the GUI), the regression training loop now executes normally and populates the configured regression model and report directories.
-
-
 
 ## Post-training evaluation and final summary order
 
-The automatic pipeline now runs the complete non-interactive evaluation chain **before** generating the consolidated research summary. For each enabled task, the order is:
+The automatic pipeline runs the complete non-interactive evaluation chain **before** generating the consolidated research summary. For each enabled task, the order is:
 
 1. train models;
 2. evaluate all regression models and create the regression best-per-feature-set ranking (when regression is selected);
@@ -452,9 +474,19 @@ pipeline:
 
 The summary stage preferentially reads `regression_report/all_evaluations.csv` and `classification_report/all_evaluations_class.csv`, together with nested-CV, learning-curve, permutation-sensitivity, ranking, and final-test outputs. Therefore it should be run last.
 
-<!-- HELP:summary_report -->
-Regenerates the consolidated research summary from the current regression, classification, nested-CV, learning-curve, permutation-sensitivity, ranking, and final-test outputs. It does not retrain models. The automatic pipeline runs this as its final non-interactive stage.
-<!-- ENDHELP -->
+
+## Reproducibility and archival use
+
+For a reproducible publication or Zenodo software release, retain the following together with the source code:
+
+- the exact `params.yaml` or experiment-specific YAML profile used for the reported run;
+- `requirements.txt` and the supported Python version;
+- the repository version or Git tag corresponding to the archived release;
+- sanitized example data or a clear statement describing restrictions on the original dataset;
+- generated summary tables needed to trace the reported results, when redistribution is permitted.
+
+The generated research summary records software/package versions, random seed, the active YAML path, dataset SHA-256 hash, and output locations when those values are available. These metadata support traceability but do not replace preservation of the original experiment configuration.
+
 
 ## Safe cleanup before a new experiment
 
@@ -463,3 +495,16 @@ When `soil_mlops_gui.py` starts, it checks for existing generated experiment out
 Nothing is selected for deletion by default. Typical selectable folders include `regression_report`, `classification_report`, `regression_models`, `classification_models`, `summary_report`, and custom top-level output folders whose names indicate reports/models/results/evaluations/predictions.
 
 For safety, the cleanup dialog excludes and protects `data/`, any folder whose name contains `data` (for example `data_processing_report`), `src/`, `configs/`, `.venv/`, `.git/`, parameter backups, tests, and other source/environment folders. A second safety check is performed immediately before deletion. The user must select folders explicitly and confirm permanent deletion.
+
+## Citation
+
+If you use GeoSoilML in academic research, please cite the associated software release and publication when citation information becomes available. For an archived release, the repository can be connected to Zenodo and the resulting DOI and citation metadata added here.
+
+## Contributing
+
+Issues and pull requests that improve reproducibility, documentation, model support, validation workflows, or compatibility with additional geotechnical and engineering-geology datasets are welcome. Changes should preserve the YAML-driven configuration approach and avoid introducing study-specific assumptions into the general workflow where possible.
+
+## License
+
+GeoSoilML is intended for distribution under the MIT License. See the repository `LICENSE` file for the exact license terms.
+
