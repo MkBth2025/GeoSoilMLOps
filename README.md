@@ -1,13 +1,64 @@
-# GeoSoilML
+# GeoSoilMLOps
 
 > A reproducible and configurable MLOps framework for geotechnical and engineering-geology machine learning.
 
-GeoSoilML provides configurable machine-learning workflows for tabular, geotechnical, geological, spatial, and related engineering datasets. Experimental targets, feature sets, grouping strategies, classification settings, model families, input datasets, and output directories are controlled primarily through YAML profiles, reducing the need to modify Python source code between studies.
+GeoSoilMLOps provides configurable machine-learning workflows for tabular, geotechnical, geological, spatial, and related engineering datasets. Experimental targets, feature sets, grouping strategies, classification settings, model families, input datasets, and output directories are controlled primarily through YAML profiles, reducing the need to modify Python source code between studies.
 
-The main graphical interface is `soil_mlops_gui.py`, and the canonical active configuration file is `params.yaml`.
+The repository contains two self-contained MLOps workflows:
+
+- **GTFS** — the geotechnical-only workflow.
+- **GLFS** — the geology-enhanced workflow.
+
+GTFS and GLFS are intentionally maintained in separate top-level folders because they are independent MLOps workflows with their own source files, active YAML configuration, models, reports, processed outputs, and identically named result files. Keeping the directory trees separate prevents output collisions and allows either workflow to be run, archived, or reproduced independently.
+
+Within each workflow, the main graphical interface is `soil_mlops_gui.py`, and the canonical active configuration file is `params.yaml`.
+
+## Repository structure
+
+```text
+GeoSoilMLOps/
+├── GTFS/
+│   ├── src/
+│   ├── configs/
+│   ├── data/
+│   ├── regression_models/
+│   ├── classification_models/
+│   ├── data_processing_report/
+│   ├── regression_report/
+│   ├── classification_report/
+│   ├── summary_report/
+│   ├── soil_mlops_gui.py
+│   ├── run_pipeline.py
+│   ├── params.yaml
+│   └── install.txt
+│
+├── GLFS/
+│   ├── src/
+│   ├── configs/
+│   ├── data/
+│   ├── regression_models/
+│   ├── classification_models/
+│   ├── data_processing_report/
+│   ├── regression_report/
+│   ├── classification_report/
+│   ├── summary_report/
+│   ├── soil_mlops_gui.py
+│   ├── run_pipeline.py
+│   ├── params.yaml
+│   └── install.txt
+│
+├── README.md
+├── requirements.txt
+├── .gitignore
+└── LICENSE
+```
+
+The root `requirements.txt`, `.gitignore`, and `LICENSE` apply to the repository as a whole. Each workflow can additionally maintain its own README for workflow-specific feature definitions, configurations, and outputs.
+
 
 ## Key features
 
+- Two independent GTFS and GLFS MLOps workflows in isolated directory trees
 - YAML-driven experiment configuration
 - Configurable regression and classification workflows
 - Multiple targets and arbitrary named feature sets
@@ -25,7 +76,7 @@ The main graphical interface is `soil_mlops_gui.py`, and the canonical active co
 
 ## Python installation
 
-Python 3.10 or newer is recommended. Create a virtual environment and install the repository dependencies from `requirements.txt`.
+Python 3.10 or newer is recommended. From the repository root, create a virtual environment and install the shared repository dependencies from `requirements.txt`.
 
 ### Windows PowerShell
 
@@ -56,13 +107,25 @@ pip install -r requirements.txt
 
 `tkinter` is part of the standard Python installation on Windows. On some Linux distributions it is supplied by the operating system rather than `pip` (for example, a package commonly named `python3-tk`).
 
-## Start the GUI
+## Start a workflow
+
+Run commands from the selected workflow directory so its local `params.yaml`, reports, models, and other outputs remain isolated.
+
+### GTFS
 
 ```bash
+cd GTFS
 python soil_mlops_gui.py --params params.yaml
 ```
 
-If `--params` is omitted, `params.yaml` remains the default active profile.
+### GLFS
+
+```bash
+cd GLFS
+python soil_mlops_gui.py --params params.yaml
+```
+
+Within either workflow, if `--params` is omitted, its local `params.yaml` remains the default active profile.
 
 ## Multiple YAML experiment profiles
 
@@ -83,7 +146,7 @@ In the GUI, choose a YAML file under **Params profile** and activate it. The cur
 --params params.yaml
 ```
 
-A YAML file selected from outside the repository can also be imported into `configs/` so an experiment configuration can be kept with the GitHub project.
+A YAML file selected from outside the active workflow can also be imported into its `configs/` so an experiment configuration can be kept with the GitHub project.
 
 For a new study, start from `params_template.yaml`, save it under a descriptive name, and activate it from the GUI.
 
@@ -189,7 +252,7 @@ The full supplied reference configuration is also retained as `configs/params_AC
 
 ## Selectable project directories
 
-The GUI allows the principal output locations to be changed. Default paths are:
+Within each of the two workflows, the GUI allows the principal output locations to be changed. Default paths are:
 
 ```text
 data/processed/
@@ -224,7 +287,7 @@ Project-local paths are stored relatively when possible, making configurations m
 
 ### Data availability
 
-The original research dataset is not distributed with this repository due to data-sharing and privacy restrictions. Users can provide their own dataset and configure its location, targets, and predictors through the active YAML profile. A synthetic or sanitized example dataset may be included solely to demonstrate the expected input structure and should not be interpreted as the original research dataset.
+The original research dataset is not distributed with either workflow due to data-sharing and privacy restrictions. Users can provide their own dataset and configure its location, targets, and predictors through the active YAML profile. A synthetic or sanitized example dataset may be included solely to demonstrate the expected input structure and should not be interpreted as the original research dataset.
 ## Command reference (`install.txt`)
 
 After paths are confirmed in the GUI, `install.txt` is regenerated to provide explicit command-line examples for the individual programs using the currently active directories and `params.yaml`.
@@ -241,9 +304,23 @@ This file serves as both an installation reference and a reproducible command re
 
 ## Run the configurable pipeline
 
-Run the enabled main stages using the active profile:
+Run the enabled main stages from inside either `GTFS/` or `GLFS/` using that workflow's active profile:
 
 ```bash
+python run_pipeline.py --params params.yaml
+```
+
+For example:
+
+```bash
+cd GTFS
+python run_pipeline.py --params params.yaml
+```
+
+or:
+
+```bash
+cd GLFS
 python run_pipeline.py --params params.yaml
 ```
 
@@ -290,13 +367,15 @@ Major dependency groups are:
 
 ## Repository and archival guidance
 
-Generated reports, processed data, caches, virtual environments, MLflow artifacts, private/raw research datasets, and non-selected model artifacts should remain excluded through `.gitignore`. Commit the source code, dependency specification, sanitized YAML profiles, and—when permitted—a small non-sensitive example dataset. A deliberately selected public model artifact may be retained in `models/` when appropriate. For a Zenodo release, archive a tagged GitHub release and include the exact configuration files needed to reproduce the reported experiments.
+GTFS and GLFS should be treated as separately reproducible workflow trees within the same GeoSoilMLOps repository. Their generated outputs may use identical filenames because they remain isolated under their respective top-level directories.
+
+Generated reports, processed data, caches, virtual environments, MLflow artifacts, private/raw research datasets, and non-selected model artifacts should remain excluded through `.gitignore`. Commit the source code, dependency specification, sanitized YAML profiles, and—when permitted—a small non-sensitive example dataset. A deliberately selected public model artifact may be retained in `GTFS/models/` and/or `GLFS/models/` when appropriate. For a Zenodo release, archive a tagged GitHub release and include the exact configuration files needed to reproduce the reported experiments.
 
 
 
 ## Pretrained/public model artifacts
 
-GeoSoilML may include a deliberately selected trained `.pkl` model in `models/` for demonstration or reproducibility purposes. Other generated model artifacts can remain excluded from version control by default.
+Each GeoSoilMLOps workflow may include a deliberately selected trained `.pkl` model in `models/` for demonstration or reproducibility purposes. Other generated model artifacts from both workflows can remain excluded from version control by default.
 
 Before publishing a serialized model, verify that the artifact does not contain raw training rows, sample identifiers, coordinates, private metadata, or other information that should not be distributed. The presence of a public model artifact does not imply that the original training dataset is distributed with this repository.
 
@@ -477,6 +556,8 @@ The summary stage preferentially reads `regression_report/all_evaluations.csv` a
 
 ## Reproducibility and archival use
 
+When reporting results, preserve the exact GTFS or GLFS workflow directory and configuration used for that experiment. Do not mix reports or model artifacts between the two workflow trees even when filenames are identical.
+
 For a reproducible publication or Zenodo software release, retain the following together with the source code:
 
 - the exact `params.yaml` or experiment-specific YAML profile used for the reported run;
@@ -498,7 +579,7 @@ For safety, the cleanup dialog excludes and protects `data/`, any folder whose n
 
 ## Citation
 
-If you use GeoSoilML in academic research, please cite the associated software release and publication when citation information becomes available. For an archived release, the repository can be connected to Zenodo and the resulting DOI and citation metadata added here.
+If you use GeoSoilMLOps in academic research, please cite the associated software release and publication when citation information becomes available. For an archived release, the repository can be connected to Zenodo and the resulting DOI and citation metadata added here.
 
 ## Contributing
 
@@ -506,5 +587,5 @@ Issues and pull requests that improve reproducibility, documentation, model supp
 
 ## License
 
-GeoSoilML is intended for distribution under the MIT License. See the repository `LICENSE` file for the exact license terms.
+GeoSoilMLOps is intended for distribution under the MIT License. See the repository `LICENSE` file for the exact license terms.
 
