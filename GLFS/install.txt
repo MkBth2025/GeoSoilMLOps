@@ -1,0 +1,20 @@
+
+python -m venv .venv; .\.venv\Scripts\Activate.ps1  # Windows: 
+pip install -r requirements.txt
+# run full pipeline on sample data
+#Start of programs
+python src/data_quality.py --data data_Ac/raw/samples.csv  --outdir reports_Ac/dq_report --params params.yaml
+python src/Multicollinearity.py --data data_Ac/raw/samples.csv --out reports_Ac/multicollinearity --params params.yaml
+python src/features.py  --input data_Ac/raw/samples.csv  --out data_Ac/processed   --params params.yaml   
+python src/train.py  --data data_Ac/processed  --models_dir models_Ac  --reports_dir reports_Ac  --params params.yaml
+python src/trainclass.py  --data data_Ac/processed   --models_dir models_Ac  --reports_dir reports_Ac  --params params.yaml
+python  src/evaluate_all.py --data data_Ac/processed --models_dir models_Ac --reports_dir reports_Ac
+python src/best_model_of_each_set_all_evaluation.py --input reports_Ac/all_evaluations.csv --output reports_Ac/best_model_of_each_set_all_evaluation.csv
+python -m src.evaluate_class --data data_Ac/processed --models_dir models_Ac_class --reports_dir reports_Ac_class                        
+python -m src.evaluate_all_class --data data_Ac/processed --models_dir models_Ac_class --reports_dir reports_Ac_class                         
+python src/best_model_of_each_set_all_evaluation_class.py --input reports_Ac_class/all_evaluations_class.csv --output reports_Ac_class/best_model_of_each_set_all_evaluation_class.csv
+python src/predict_Reg.py   --gui  --data data_ac/processed  --models_dir models_Ac  --reports_dir  reports_Ac                 
+python src/predict_class.py   --gui  --data data_ac/processed   --models_dir models_Ac_class  --reports_dir reports_Ac_class  --params params.yaml
+#End of programs
+
+

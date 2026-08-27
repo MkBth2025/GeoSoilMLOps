@@ -1,0 +1,44 @@
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# GUI/configuration backups
+params_backups/
+
+# Generated data and artifacts
+# Generic defaults
+data/processed/
+regression_report/
+classification_report/
+regression_models/
+classification_models/
+data_processing_report/
+
+# Common alternative naming schemes
+data_*/processed/
+models/
+models_*/
+*_models/
+reports/
+reports_*/
+*_report/
+*_reports/
+
+# Local/private raw datasets. Commit a tiny public example explicitly if desired.
+data/raw/*.csv
+data_*/raw/*.csv
+
+# MLflow local artifacts/databases
+mlruns/
+mlartifacts/
+mlflow.db
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,555 @@
+random_state: 42
+preprocessing:
+  scaling: standard
+  power_transform: none
+  normalization: none
+  polynomial_features: false
+  poly_degree: 2
+  poly_interaction_only: false
+  poly_include_bias: false
+  spline_features: false
+  spline_n_knots: 5
+  spline_degree: 3
+  spline_extrapolation: constant
+  categorical_encoding: null
+  categorical_columns: []
+  numeric_columns: []
+  drop_first: false
+  drop_remainder: true
+TARGETS:
+  AC:
+    fs1:
+    - Distance
+    - Depth
+    - Ucs_class
+    - PI/FF
+    fs2:
+    - Distance
+    - Depth
+    - Ucs_class
+    - PI
+    - FF
+    fs3:
+    - Distance
+    - Depth
+    - Ucs_class
+    - LL
+    - PL
+    - FF
+    fs4:
+    - Distance
+    - Depth
+    - Ucs_class
+    - PI
+split:
+  mode: fixed
+  train: 0.8
+  test: 0.2
+  random_state: 42
+  stratification_method: ac_quantile
+  ac_quantile_bins: 5
+  group_column: Location_No
+  save_indices: true
+  bh_column: BH
+  location_column: Location_No
+  cv_splits: 5
+  cv_repeats: 3
+models:
+- MLR
+- RIDGE
+- LASSO
+- EN
+- SVR
+- KNN
+- DT
+- RF
+- ET
+- GBR
+- XGB
+- ANN
+cv_splits: 5
+param_grids:
+  MLR:
+    _cv_: 5
+    _n_jobs_: -1
+    fit_intercept:
+    - true
+  RIDGE:
+    _cv_: 5
+    _n_jobs_: -1
+    alpha:
+    - 0.1
+    - 1.0
+    - 10.0
+    - 100.0
+    solver:
+    - auto
+  LASSO:
+    _cv_: 5
+    _n_jobs_: -1
+    alpha:
+    - 0.0001
+    - 0.001
+    - 0.01
+    - 0.1
+    - 1.0
+    - 10.0
+    selection:
+    - cyclic
+    - random
+    max_iter:
+    - 10000
+  EN:
+    _cv_: 5
+    _n_jobs_: -1
+    alpha:
+    - 0.0001
+    - 0.001
+    - 0.01
+    - 0.1
+    - 1.0
+    - 10.0
+    l1_ratio:
+    - 0.1
+    - 0.25
+    - 0.5
+    - 0.75
+    - 0.9
+    selection:
+    - cyclic
+    - random
+    max_iter:
+    - 10000
+  SVR:
+    _cv_: 5
+    _n_jobs_: -1
+    C:
+    - 0.1
+    - 1.0
+    - 10.0
+    - 50.0
+    gamma:
+    - scale
+    - 0.01
+    - 0.05
+    - 0.1
+    epsilon:
+    - 0.05
+    - 0.1
+    - 0.2
+    - 0.3
+    kernel:
+    - rbf
+  KNN:
+    _cv_: 3
+    _n_jobs_: -1
+    n_neighbors:
+    - 5
+    - 7
+    - 9
+    - 11
+    - 15
+    weights:
+    - uniform
+    - distance
+    p:
+    - 1
+    - 2
+  DT:
+    _cv_: 5
+    _n_jobs_: -1
+    criterion:
+    - squared_error
+    - friedman_mse
+    - absolute_error
+    splitter:
+    - best
+    - random
+    max_depth:
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 8
+    min_samples_split:
+    - 4
+    - 8
+    - 12
+    - 20
+    min_samples_leaf:
+    - 2
+    - 4
+    - 6
+    - 8
+    max_features:
+    - null
+    - sqrt
+    - log2
+    ccp_alpha:
+    - 0.0
+    - 0.001
+    - 0.005
+    - 0.01
+    - 0.05
+  RF:
+    _cv_: 5
+    _n_jobs_: -1
+    n_estimators:
+    - 200
+    - 400
+    - 600
+    max_depth:
+    - 3
+    - 5
+    - 7
+    - 10
+    min_samples_split:
+    - 4
+    - 8
+    - 12
+    - 20
+    min_samples_leaf:
+    - 2
+    - 4
+    - 6
+    - 8
+    max_features:
+    - sqrt
+    - 0.5
+    - 0.75
+  ET:
+    _cv_: 5
+    _n_jobs_: -1
+    n_estimators:
+    - 200
+    - 400
+    - 600
+    max_depth:
+    - 3
+    - 5
+    - 7
+    - 10
+    min_samples_split:
+    - 4
+    - 8
+    - 12
+    - 20
+    min_samples_leaf:
+    - 2
+    - 4
+    - 6
+    - 8
+    max_features:
+    - sqrt
+    - 0.5
+    - 0.75
+    - 1.0
+    bootstrap:
+    - false
+    - true
+  GBR:
+    _cv_: 5
+    _n_jobs_: -1
+    n_estimators:
+    - 100
+    - 200
+    - 300
+    learning_rate:
+    - 0.01
+    - 0.025
+    - 0.05
+    max_depth:
+    - 1
+    - 2
+    - 3
+    min_samples_split:
+    - 4
+    - 8
+    - 12
+    min_samples_leaf:
+    - 2
+    - 4
+    - 6
+    - 8
+    subsample:
+    - 0.6
+    - 0.75
+    - 0.9
+    loss:
+    - squared_error
+    - huber
+  XGB:
+    _cv_: 5
+    _n_jobs_: -1
+    n_estimators:
+    - 100
+    - 200
+    - 400
+    - 600
+    learning_rate:
+    - 0.01
+    - 0.03
+    - 0.05
+    max_depth:
+    - 2
+    - 3
+    - 4
+    subsample:
+    - 0.6
+    - 0.8
+    - 1.0
+    colsample_bytree:
+    - 0.6
+    - 0.8
+    - 1.0
+    reg_lambda:
+    - 1.0
+    - 5.0
+    - 10.0
+    - 20.0
+    reg_alpha:
+    - 0.0
+    - 0.1
+    - 0.5
+    - 1.0
+    min_child_weight:
+    - 1
+    - 3
+    - 5
+    gamma:
+    - 0.0
+    - 0.1
+    - 0.25
+  ANN:
+    _cv_: 5
+    _n_jobs_: -1
+    hidden_layer_sizes:
+    - - 16
+    - - 32
+    - - 32
+      - 16
+    alpha:
+    - 0.001
+    - 0.01
+    - 0.1
+    - 1.0
+    learning_rate_init:
+    - 0.0005
+    - 0.001
+    - 0.003
+    activation:
+    - relu
+    solver:
+    - adam
+    batch_size:
+    - 16
+    - 32
+    early_stopping:
+    - true
+    max_iter:
+    - 2000
+training_strategy:
+  quick_mode: false
+  two_phase_training:
+    phase1:
+      name: quick_search
+      models:
+      - MLR
+      - RIDGE
+      - LASSO
+      - EN
+      - SVR
+      - KNN
+      - DT
+      cv_folds: 3
+      max_combinations: 80
+    phase2:
+      name: refined_search
+      models:
+      - RF
+      - ET
+      - GBR
+      - XGB
+      - ANN
+      cv_folds: 5
+      max_combinations: 120
+  parallel:
+    enabled: true
+    max_workers: 4
+    backend: loky
+  memory:
+    batch_size: 1000
+    pre_dispatch: 2*n_jobs
+  early_pruning:
+    enabled: false
+    min_score: 0.5
+    patience: 3
+  default_max_combinations: 80
+evaluation:
+  random_state: 42
+  cv_splits: 5
+  repeated_cv_repeats: 10
+  generate_learning_curves: true
+  learning_curve_train_sizes:
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  - 1.0
+  learning_curve_scoring_regression: r2
+  learning_curve_scoring_classification: f1_macro
+  selection_policy: composite_nested_cv
+  test_policy: final_holdout_only
+  selection_weights:
+    cv_r2: 0.6
+    cv_stability: 0.2
+    train_cv_gap: 0.2
+  nested_cv_outer_repeats: 1
+classification:
+  enabled: true
+  targets:
+  - AC
+  random_state: 42
+  models:
+  - LOGREG
+  - SVC
+  - KNN
+  - DT
+  - RF
+  - ET
+  - GBC
+  - XGB
+  - ANN
+  cv_splits: 5
+  cv_repeats: 10
+  random_search_threshold: 100
+  n_iter: 50
+  weight_sensitivity_simulations: 1000
+  param_grids:
+    LOGREG:
+      _cv_: 5
+      _n_jobs_: -1
+      penalty:
+      - l2
+      C:
+      - 0.01
+      - 0.1
+      - 1
+      - 10
+      - 100
+      solver:
+      - lbfgs
+      class_weight:
+      - null
+      - balanced
+      max_iter:
+      - 3000
+    SVC:
+      _cv_: 5
+      _n_jobs_: -1
+      C:
+      - 0.1
+      - 1
+      - 10
+      - 100
+      kernel:
+      - rbf
+      - linear
+      gamma:
+      - scale
+      - auto
+      class_weight:
+      - null
+      - balanced
+    DT:
+      _cv_: 5
+      _n_jobs_: -1
+      criterion:
+      - gini
+      - entropy
+      - log_loss
+      max_depth:
+      - null
+      - 3
+      - 5
+      - 8
+      - 12
+      min_samples_split:
+      - 2
+      - 5
+      - 10
+      min_samples_leaf:
+      - 1
+      - 2
+      - 4
+      class_weight:
+      - null
+      - balanced
+    ET:
+      _cv_: 5
+      _n_jobs_: -1
+      n_estimators:
+      - 100
+      - 300
+      - 500
+      max_depth:
+      - null
+      - 5
+      - 10
+      - 20
+      min_samples_leaf:
+      - 1
+      - 2
+      - 4
+      class_weight:
+      - null
+      - balanced
+    GBC:
+      _cv_: 5
+      _n_jobs_: -1
+      n_estimators:
+      - 100
+      - 200
+      learning_rate:
+      - 0.01
+      - 0.05
+      - 0.1
+      max_depth:
+      - 2
+      - 3
+    ANN:
+      hidden_layer_sizes:
+      - - 16
+      - - 32
+      - - 32
+        - 16
+      - - 64
+        - 32
+      activation:
+      - relu
+      - tanh
+      solver:
+      - adam
+      alpha:
+      - 0.0001
+      - 0.001
+      - 0.01
+      learning_rate_init:
+      - 0.0005
+      - 0.001
+      - 0.005
+      batch_size:
+      - 8
+      - 16
+      - 32
+      early_stopping:
+      - true
+      max_iter:
+      - 3000
+  class_boundaries:
+    AC:
+      lower: 0.75
+      upper: 1.25
+feature_notes:
+  Ucs_class: CL=0, CH=1

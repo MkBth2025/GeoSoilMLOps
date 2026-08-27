@@ -1,0 +1,112 @@
+project:
+  name: my-study
+  description: Config-driven tabular MLOps study
+data:
+  input_csv: data/raw/samples.csv
+  id_columns: []
+  spatial:
+    enabled: false
+    latitude_column: null
+    longitude_column: null
+paths:
+  processed_data: data/processed
+  reports_regression: regression_report
+  reports_classification: classification_report
+  models_regression: regression_models
+  models_classification: classification_models
+  dq_report: data_processing_report/dq_report
+  multicollinearity_report: data_processing_report/multicollinearity
+  summary_report: summary_report
+TARGETS:
+  Target1:
+    fs1:
+    - Feature_A
+    - Feature_B
+    fs2:
+    - Feature_A
+    - Feature_B
+    - Feature_C
+split:
+  mode: fixed
+  train: 0.8
+  test: 0.2
+  random_state: 42
+  grouping_enabled: false
+  group_column: null
+  location_column: null
+  bh_column: null
+  stratification_method: none
+  stratification_target: Target1
+  ac_quantile_bins: 5
+  cv_splits: 5
+  cv_repeats: 3
+  save_indices: true
+preprocessing:
+  scaling: standard
+  power_transform: none
+  normalization: none
+  polynomial_features: false
+  poly_degree: 2
+  categorical_encoding: null
+  categorical_columns: []
+  numeric_columns: []
+  drop_first: false
+  drop_remainder: true
+pipeline:
+  data_quality: true
+  multicollinearity: true
+  features: true
+  regression: true
+  classification: false
+  regression_evaluation: true
+  classification_evaluation: true
+  summary_report: true
+classification:
+  enabled: false
+  targets: []
+  target_modes: {}
+  class_boundaries: {}
+  random_state: 42
+  models:
+  - LOGREG
+  - SVC
+  - KNN
+  - DT
+  - RF
+  - ET
+  - GBC
+  - XGB
+  - ANN
+  cv_splits: 5
+  cv_repeats: 10
+  random_search_threshold: 100
+  n_iter: 50
+models:
+- MLR
+- RIDGE
+- LASSO
+- EN
+- SVR
+- KNN
+- DT
+- RF
+- ET
+- GBR
+- XGB
+- ANN
+param_grids: {}
+evaluation:
+  generate_learning_curves: true
+  generate_permutation_sensitivity: true
+  permutation_sensitivity_repeats: 30
+  permutation_sensitivity_n_jobs: -1
+  nested_cv_outer_repeats: 1
+summary_report:
+  enabled: true
+  pdf: true
+  pdf_filename: MLOps_Research_Summary.pdf
+  include_nested_cv: true
+  include_learning_curves: true
+  include_permutation_sensitivity: true
+  include_reproducibility: true
+  fail_pipeline_on_error: false
