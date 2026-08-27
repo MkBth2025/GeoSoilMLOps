@@ -25,4 +25,8 @@ GLFS/classification_models/*
 
 # Python cache
 __pycache__/
+<<<<<<< HEAD
 *.py[cod]
+=======
+*.py[cod]
+>>>>>>> 22103708b2eabd5c17542ec49922ba5b9a1b8ced
