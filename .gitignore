@@ -1,32 +1,17 @@
-# Private datasets
-GTFS/data/raw/*
-GLFS/data/raw/*
+# ============================================================
+# GeoSoilMLOps
+# Track all GTFS and GLFS contents except secrets and caches
+# ============================================================
 
-# Processed data
-GTFS/data/processed/*
-GLFS/data/processed/*
-
-# Generated reports
-GTFS/data_processing_report/
-GTFS/regression_report/
-GTFS/classification_report/
-GTFS/summary_report/
-
-GLFS/data_processing_report/
-GLFS/regression_report/
-GLFS/classification_report/
-GLFS/summary_report/
-
-# Trained models - ignore by default
-GTFS/regression_models/*
-GTFS/classification_models/*
-GLFS/regression_models/*
-GLFS/classification_models/*
+# Environment / secret files
+.env
+.env.*
+**/.env
+**/.env.*
 
 # Python cache
 __pycache__/
-<<<<<<< HEAD
-*.py[cod]
-=======
-*.py[cod]
->>>>>>> 22103708b2eabd5c17542ec49922ba5b9a1b8ced
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
