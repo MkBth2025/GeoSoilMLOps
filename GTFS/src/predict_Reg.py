@@ -105,6 +105,36 @@ def _safe_json_load(path: Path):
     except Exception:
         return {}
 
+
+def _find_joblib(root, candidate_names):
+    """Find a joblib file directly or recursively, case-insensitively."""
+    root = Path(root)
+    for name in candidate_names:
+        path = root / str(name)
+        if path.exists():
+            return path
+    wanted = {str(name).lower() for name in candidate_names}
+    try:
+        for path in root.rglob("*.joblib"):
+            if path.name.lower() in wanted:
+                return path
+    except Exception:
+        pass
+    return None
+
+
+def _resolve_cv_training_data(data_dir, fs, suffix="AC"):
+    """Resolve X/y training joblib paths robustly for CV diagnostics."""
+    data_dir = Path(data_dir)
+    fs_text = str(fs).strip()
+    fs_lower = fs_text.lower()
+    fs_upper = fs_text.upper()
+    fs_title = "Fs" + fs_lower[2:] if fs_lower.startswith("fs") else fs_text
+    suffix_text = str(suffix or "AC").strip()
+    x_path = _find_joblib(data_dir,[f"X_train_{fs_text}.joblib",f"X_train_{fs_lower}.joblib",f"X_train_{fs_upper}.joblib",f"X_train_{fs_title}.joblib"])
+    y_path = _find_joblib(data_dir,[f"y_train_{suffix_text}.joblib",f"y_train_{suffix_text.lower()}.joblib",f"y_train_{suffix_text.upper()}.joblib","y_train_AC.joblib","y_train_ac.joblib"])
+    return x_path, y_path
+
 def load_training_best_model_and_fs(data_dir, models_dir, reports_dir):
     """Load the model selected from development-set cross-validation."""
     model_path = next((p for p in (models_dir / "best_overall.pkl", models_dir / "best.pkl") if p.exists()), None)
@@ -1648,7 +1678,7 @@ def on_main_window_close(window):
         pass
 
 
-def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, params_path="params.yaml"):
+def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, default_cv_repeats=1, params_path="params.yaml"):
     if tk is None: 
         sys.exit("[ERROR] tkinter not available.")
     if Figure is None: 
@@ -2175,6 +2205,7 @@ def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, params_pat
                 format_value(r.get("cv_r2_std", np.nan), 4),
                 format_value(r.get("r2_test", np.nan), 4),
                 format_value(r.get("train_cv_gap", np.nan), 4),
+                format_value(r.get("cv_test_gap", np.nan), 4),
                 r.get("generalization_diagnosis", ""),
                 r.get("file", "")
             ))
@@ -2401,7 +2432,7 @@ def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, params_pat
     ttk.Entry(viz, textvariable=cv_folds_var, width=8).grid(row=3, column=3, sticky="w", padx=(0, 5))
     
     ttk.Label(viz, text="CV repeats:", width=10).grid(row=3, column=4, sticky="e", padx=(0, 5))
-    cv_repeats_var = tk.StringVar(value="1")
+    cv_repeats_var = tk.StringVar(value=str(default_cv_repeats))
     ttk.Entry(viz, textvariable=cv_repeats_var, width=8).grid(row=3, column=5, sticky="w", padx=(0, 5))
     
     ttk.Label(viz, text="CV metric:", width=10).grid(row=3, column=6, sticky="e", padx=(0, 5))
@@ -2708,18 +2739,29 @@ def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, params_pat
             model_name = d2["model"].iloc[0]
             fs = d2["fs"].iloc[0]
             
-            # Load appropriate y files based on reports_dir name
+            # Resolve training data robustly. Files may be nested below data_dir
+            # and may use fs1/Fs1/FS1 naming.
             suffix = reports_dir.name.split('_')[-1] if '_' in reports_dir.name else "AC"
-            y_train_file = data_dir / f"y_train_{suffix}.joblib"
-            X = y = None
-            try:
-                X = joblib.load(data_dir / f"X_train_{fs}.joblib")
-                y = joblib.load(y_train_file)
-            except Exception:
-                _draw_info(current_figures['ax4'], f"CV: no training data for {fs}")
+            x_path, y_path = _resolve_cv_training_data(data_dir, fs, suffix)
+
+            if x_path is None or y_path is None:
+                missing = []
+                if x_path is None:
+                    missing.append(f"X training data for {fs}")
+                if y_path is None:
+                    missing.append(f"y training data for {suffix}")
+                _draw_info(current_figures['ax4'],"CV data not found:\n"+"\n".join(missing)+f"\n\nSearched under:\n{data_dir}")
                 current_figures['canv4'].draw()
                 return
-
+            try:
+                X = joblib.load(x_path)
+                y = joblib.load(y_path)
+            except Exception as exc:
+                _draw_info(current_figures['ax4'],f"CV data loading failed:\n{exc}")
+                current_figures['canv4'].draw()
+                return
+            print(f"[CV] X loaded from: {x_path}")
+            print(f"[CV] y loaded from: {y_path}")
             if X is None or y is None or len(y) < 3:
                 _draw_info(current_figures['ax4'], f"CV: insufficient data for {fs}")
                 current_figures['canv4'].draw()
@@ -2731,16 +2773,24 @@ def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, params_pat
             if model_path.exists():
                 try:
                     base_model = joblib.load(model_path)
-                except:
+                except Exception:
                     base_model = None
-            
             if base_model is None:
                 try:
-                    base_model = joblib.load(models_dir / "best.pkl")
-                except:
+                    fallback_path = next((p for p in (models_dir / "best_overall.pkl", models_dir / "best.pkl") if p.exists()), None)
+                    if fallback_path is None:
+                        raise FileNotFoundError("best_overall.pkl/best.pkl not found")
+                    base_model = joblib.load(fallback_path)
+                except Exception:
                     _draw_info(current_figures['ax4'], "CV: cannot load model")
                     current_figures['canv4'].draw()
                     return
+            if isinstance(base_model, dict):
+                extracted = base_model.get("model")
+                if extracted is None:
+                    extracted = next((value for value in base_model.values() if hasattr(value, "fit") and hasattr(value, "predict")), None)
+                if extracted is not None:
+                    base_model = extracted
             
             # Load scaler
             def _load_scaler_for_fs(fs_):
@@ -3047,15 +3097,34 @@ def launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=5, params_pat
                     if "_" in reports_dir.name
                     else "AC"
                 )
-                y_train_file = data_dir / f"y_train_{suffix}.joblib"
-                X = joblib.load(data_dir / f"X_train_{fs}.joblib")
-                y = joblib.load(y_train_file)
+                x_path, y_path = _resolve_cv_training_data(data_dir, fs, suffix)
+                if x_path is None or y_path is None:
+                    missing = []
+                    if x_path is None:
+                        missing.append(f"X training data for {fs}")
+                    if y_path is None:
+                        missing.append(f"y training data for {suffix}")
+                    raise FileNotFoundError("CV data not found: "+", ".join(missing)+f". Searched under: {data_dir}")
+                X = joblib.load(x_path)
+                y = joblib.load(y_path)
+                print(f"[CV SAVE] X loaded from: {x_path}")
+                print(f"[CV SAVE] y loaded from: {y_path}")
 
                 model_path = models_dir / selected_file
                 if model_path.exists():
                     base_model = joblib.load(model_path)
                 else:
-                    base_model = joblib.load(models_dir / "best.pkl")
+                    fallback_path = next((p for p in (models_dir / "best_overall.pkl", models_dir / "best.pkl") if p.exists()), None)
+                    if fallback_path is None:
+                        raise FileNotFoundError("Neither the selected model nor best_overall.pkl/best.pkl was found.")
+                    base_model = joblib.load(fallback_path)
+                if isinstance(base_model, dict):
+                    extracted = base_model.get("model")
+                    if extracted is None:
+                        extracted = next((value for value in base_model.values() if hasattr(value, "fit") and hasattr(value, "predict")), None)
+                    if extracted is None:
+                        raise ValueError("No sklearn-compatible estimator found in the saved model package.")
+                    base_model = extracted
 
                 try:
                     folds = max(3, min(10, int(cv_folds_var.get())))
@@ -3571,7 +3640,7 @@ def main():
     if args.gui:
         # Call the launch_gui function with CV parameters
         try:
-            launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=args.cv_folds, params_path=args.params)
+            launch_gui(data_dir, models_dir, reports_dir, default_cv_folds=args.cv_folds, default_cv_repeats=args.cv_repeats, params_path=args.params)
         except Exception as e:
             print(f"[ERROR] Failed to launch GUI: {e}")
             import traceback

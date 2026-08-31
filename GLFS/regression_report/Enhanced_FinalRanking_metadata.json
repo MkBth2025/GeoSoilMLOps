@@ -1,5 +1,5 @@
 {
-  "generated_date": "2026-08-23 15:42:44",
+  "generated_date": "2026-08-30 23:50:45",
   "total_models": 48,
   "primary_rank": "statistical_rank / selection_rank",
   "selection_uses_test_metrics": false,
@@ -31,16 +31,16 @@
     "maximum_single_criterion_weight": 0.5
   },
   "sensitivity_outputs": {
-    "scenarios": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightScenarios.csv",
-    "scenario_results": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightSensitivityAnalysis.csv",
-    "monte_carlo_weights": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\MonteCarloWeightSensitivity.csv",
-    "monte_carlo_rank_matrix": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\MonteCarloRankMatrix.csv",
-    "summary": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightSensitivitySummary.txt",
-    "first_place_plot": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\MonteCarloFirstPlaceRate.png",
-    "rank_distribution_plot": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\WeightSensitivityRankDistribution.png"
+    "scenarios": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\WeightScenarios.csv",
+    "scenario_results": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\WeightSensitivityAnalysis.csv",
+    "monte_carlo_weights": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\MonteCarloWeightSensitivity.csv",
+    "monte_carlo_rank_matrix": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\MonteCarloRankMatrix.csv",
+    "summary": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\WeightSensitivitySummary.txt",
+    "first_place_plot": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\MonteCarloFirstPlaceRate.png",
+    "rank_distribution_plot": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\WeightSensitivityRankDistribution.png"
   },
   "test_rank_purpose": "Descriptive final holdout reporting only",
   "generalization_rank_purpose": "Supplementary assessment based on train-CV gap, CV variability, and CV-validation split sensitivity",
   "principal_overfitting_indicator": "r2_train - cv_r2_mean",
-  "output_alias": "G:\\Researching\\GT_GL_MLops\\GEO_MLops_2026\\GLFS\\regression_report\\EnhancedFinalRanking.csv"
+  "output_alias": "G:\\Researching\\GT_GL_MLops\\Github_GeoSoilMLOps\\GeoSoilMLOps\\GLFS\\regression_report\\EnhancedFinalRanking.csv"
 }

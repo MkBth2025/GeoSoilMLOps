@@ -1,19 +1,3 @@
-"""Configuration-driven regression training for soil Activity (AC).
-
-The file intentionally acts as an *orchestrator*. Model-specific construction is
-kept in ``src/train_model_code``. The workflow is organized as tutorial steps:
-
-1. Load and validate ``params.yaml``.
-2. Load each target and feature set prepared by the data pipeline.
-3. Build a leakage-safe preprocessing + model pipeline.
-4. tune hyperparameters using only development-set cross-validation.
-5. Evaluate stability using repeated K-fold or grouped cross-validation.
-6. Save every fitted model and all development metrics.
-7. Select the best model per feature set and overall using CV only.
-8. Evaluate only the selected models on the untouched test set.
-
-This design keeps model selection independent of the final test set.
-"""
 from __future__ import annotations
 
 import argparse
