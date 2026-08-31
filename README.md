@@ -579,7 +579,7 @@ For safety, the cleanup dialog excludes and protects `data/`, any folder whose n
 
 ## Citation
 
-If you use GeoSoilMLOps in academic research, please cite the associated software release and publication when citation information becomes available. For an archived release, the repository can be connected to Zenodo and the resulting DOI and citation metadata added here.
+If you use GeoSoilMLOps in academic research, please cite the associated software release and publication when citation information becomes available. 
 
 ## Contributing
 
