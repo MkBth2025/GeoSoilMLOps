@@ -188,7 +188,7 @@ def parse_command_line(argv=None):
     """Parse command-line options for the GUI."""
 
     parser = argparse.ArgumentParser(
-        description="Configurable Geo/Engineering MLOps graphical interface."
+        description="Configurable GeoSoilMLOps MLOps graphical interface."
     )
 
     parser.add_argument(

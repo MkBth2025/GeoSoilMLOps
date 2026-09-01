@@ -1,0 +1,43 @@
+{
+  "title": "GeoSoilMLOps: A Reproducible and Configurable MLOps Framework for Geotechnical and Engineering-Geology Machine Learning",
+  "description": "GeoSoilMLOps is a reproducible and configurable machine-learning operations (MLOps) framework designed for tabular geotechnical, geological, spatial, and related engineering datasets.\n\nThe software provides two self-contained workflows: GTFS, for geotechnical-only feature sets, and GLFS, for geology-enhanced feature sets. Experiments are primarily controlled through YAML configuration profiles, allowing researchers to define datasets, prediction targets, feature sets, grouping strategies, classification settings, model families, hyperparameter search spaces, and output directories without modifying the main Python source code.\n\nGeoSoilMLOps supports configurable regression and classification, location/group-aware validation, nested cross-validation, independent holdout evaluation, hyperparameter optimization, learning-curve analysis, permutation-sensitivity/permutation-importance analysis, automated model evaluation and ranking, interactive prediction, and automated PDF, Markdown, JSON, and CSV research summaries. The framework also records reproducibility information including software/package versions, random seeds, active experiment configurations, and dataset hashes when available.\n\nThis release contains separate GTFS and GLFS workflow trees to prevent model, report, configuration, and result-file collisions and to allow each experimental family to be reproduced independently.\n\nThis software release supports the computational workflow associated with the manuscript “Machine Learning Prediction of Soil Activity Using Geotechnical and Geological Features: Location-Aware Assessment of Model Generalization.”\n\nThe original research dataset used in the associated study is not distributed with this software release because of data-sharing restrictions. Users may run GeoSoilMLOps with their own appropriately structured datasets. Any synthetic or sanitized example dataset included in the repository is provided solely to demonstrate the expected input structure and workflow and does not represent the original research data.",
+  "creators": [
+    {
+      "name": "Kiani, Mojtaba",
+      "affiliation": "Independent Researcher"
+    },
+    {
+      "name": "Kiani Sheikhabadi, Mohammad",
+      "affiliation": "Blekinge Institute of Technology (BTH), Sweden"
+    }
+  ],
+  "keywords": [
+    "machine learning",
+    "MLOps",
+    "geotechnical engineering",
+    "engineering geology",
+    "soil engineering",
+    "reproducible research",
+    "group-aware validation",
+    "spatial machine learning",
+    "regression",
+    "classification",
+    "nested cross-validation",
+    "geological features",
+    "soil activity"
+  ],
+  "license": {
+    "id": "MIT"
+  },
+  "upload_type": "software",
+  "access_right": "open",
+  "version": "1.0.0",
+  "publication_date": "2026-09-01",
+  "related_identifiers": [
+    {
+      "scheme": "url",
+      "identifier": "https://github.com/MkBth2025/GeoSoilMLOps",
+      "relation": "isVersionOf"
+    }
+  ]
+}

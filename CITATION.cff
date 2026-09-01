@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use GeoSoilMLOps in your research, please cite this software release and the associated publication."
+title: "GeoSoilMLOps: A Reproducible and Configurable MLOps Framework for Geotechnical and Engineering-Geology Machine Learning"
+type: software
+version: 1.0.0
+date-released: 2026-09-01
+
+authors:
+  - family-names: "Kiani"
+    given-names: "Mojtaba"
+    affiliation: "Independent Researcher"
+  - family-names: "Kiani Sheikhabadi"
+    given-names: "Mohammad"
+    affiliation: "Blekinge Institute of Technology (BTH), Sweden"
+
+repository-code: "https://github.com/MkBth2025/GeoSoilMLOps"
+url: "https://github.com/MkBth2025/GeoSoilMLOps"
+license: MIT
+
+keywords:
+  - "machine learning"
+  - "MLOps"
+  - "geotechnical engineering"
+  - "engineering geology"
+  - "soil engineering"
+  - "reproducible research"
+  - "group-aware validation"
+  - "spatial machine learning"
+  - "regression"
+  - "classification"
+  - "nested cross-validation"
+  - "geological features"
+  - "soil activity"
