@@ -1,5 +1,8 @@
 # GeoSoilMLOps
 
+[![DOI](https://zenodo.org/badge/1348126996.svg)](https://doi.org/10.5281/zenodo.22258519)
+
+
 > A reproducible and configurable MLOps framework for geotechnical and engineering-geology machine learning.
 
 **Version:** 1.0.0
